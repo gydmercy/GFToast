@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="wqk-op-Jmm">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <animations/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whV-gf-hws" userLabel="Button1">
+                                <rect key="frame" x="187" y="94" width="226" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="226" id="Qjc-gX-EuW"/>
+                                </constraints>
+                                <state key="normal" title="带图片，显示时间短，底部显示">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="button1Action:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="c2J-rK-qsj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fcc-Cp-1jW" userLabel="Button2">
+                                <rect key="frame" x="187" y="148" width="227" height="30"/>
+                                <animations/>
+                                <state key="normal" title="带图片，显示时间长，居中显示">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="button2Action:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gbr-s5-L7Q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r5X-J2-8Pk" userLabel="Button3">
+                                <rect key="frame" x="184" y="204" width="233" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="233" id="8je-eN-Iny"/>
+                                </constraints>
+                                <state key="normal" title="不带图片，显示时间长，短文本">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="button3Action:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ezF-6g-CkN"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BL5-yB-KFs" userLabel="Button4">
+                                <rect key="frame" x="195" y="258" width="210" height="30"/>
+                                <animations/>
+                                <state key="normal" title="不带图片，显示时间短，长文本">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="button4Action:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="bYk-fU-2Jf"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="r5X-J2-8Pk" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="204" id="F9q-GW-IJE"/>
+                            <constraint firstItem="r5X-J2-8Pk" firstAttribute="top" secondItem="Fcc-Cp-1jW" secondAttribute="bottom" constant="26" id="NaS-Hg-Xsh"/>
+                            <constraint firstItem="wqk-op-Jmm" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-20" id="Q26-cN-yhs"/>
+                            <constraint firstItem="BL5-yB-KFs" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="QJk-pm-iX1"/>
+                            <constraint firstItem="Fcc-Cp-1jW" firstAttribute="top" secondItem="whV-gf-hws" secondAttribute="bottom" constant="24" id="VKK-tW-o1M"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wqk-op-Jmm" secondAttribute="trailing" constant="-20" id="ZGa-Wk-EyB"/>
+                            <constraint firstItem="r5X-J2-8Pk" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="c2Y-vW-PiF"/>
+                            <constraint firstItem="whV-gf-hws" firstAttribute="leading" secondItem="Fcc-Cp-1jW" secondAttribute="leading" id="cOU-em-8nk"/>
+                            <constraint firstItem="Fcc-Cp-1jW" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="iLh-xz-DN1"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="wqk-op-Jmm" secondAttribute="bottom" id="m54-d6-ZDq"/>
+                            <constraint firstItem="BL5-yB-KFs" firstAttribute="top" secondItem="r5X-J2-8Pk" secondAttribute="bottom" constant="24" id="p51-0r-teZ"/>
+                            <constraint firstItem="whV-gf-hws" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="rmU-yO-FO5"/>
+                            <constraint firstItem="wqk-op-Jmm" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="-20" id="sGp-L9-vRO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="button1" destination="whV-gf-hws" id="rYb-8o-caO"/>
+                        <outlet property="button2" destination="Fcc-Cp-1jW" id="iic-2c-HY7"/>
+                        <outlet property="button3" destination="r5X-J2-8Pk" id="8BW-tQ-QNm"/>
+                        <outlet property="button4" destination="BL5-yB-KFs" id="bEy-X9-wC7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="428" y="374"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="background" width="350" height="621"/>
+    </resources>
+</document>
