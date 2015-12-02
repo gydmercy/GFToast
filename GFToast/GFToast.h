@@ -14,7 +14,7 @@ typedef NS_ENUM(NSUInteger, GFToastAnimation){
     /** 渐隐渐现 */
     GFToastAnimationFadeInFadeOut,
     /** 缩放出现消失 */
-    GFToastAnimationZoomInZoomOut
+    GFToastAnimationZoomInZoomOut // 待实现.....
 };
 
 /**
@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, GFToastShowPosition){
 @interface GFToast : UIView
 
 /**
- *  只有文本没有图片的Toast，默认显示在底部，持续时间短，渐隐渐现
+ *  只有文本没有图片的 Toast，默认显示在底部，持续时间短，渐隐渐现
  *
  *  @param view 显示Toast的View
  *  @param text Toast文本
@@ -50,7 +50,8 @@ typedef NS_ENUM(NSUInteger, GFToastShowPosition){
                withText:(NSString *)text;
 
 /**
- *  既有文本又有图片的Toast，默认显示在底部，持续时间短，渐隐渐现
+ *  既有文本又有图片的 Toast，默认显示在底部，持续时间短，渐隐渐现
+ *  如果 Toast 带有图片，则文字不要超过一行
  *
  *  @param view  显示Toast的View
  *  @param image Toast图片
@@ -61,7 +62,7 @@ typedef NS_ENUM(NSUInteger, GFToastShowPosition){
                    text:(NSString *)text;
 
 /**
- *  显示Toast
+ *  显示 Toast
  *
  *  @param view      显示Toast的View
  *  @param image     Toast图片
