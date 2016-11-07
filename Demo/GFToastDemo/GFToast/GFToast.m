@@ -40,8 +40,8 @@ static const CGFloat kLongShowTime = 3.6;
 static const CGFloat kShortShowTime = 1.8;
 
 // 动画持续时长
-static const CGFloat kShowAnimationDuration = 0.25;
-static const CGFloat kHideAnimationDuration = 0.2;
+static const CGFloat kShowAnimationDuration = 0.2;
+static const CGFloat kHideAnimationDuration = 0.25;
 
 
 #pragma mark - Class Method
