@@ -32,13 +32,15 @@
 - (IBAction)button1Action:(id)sender {
     [GFToast showToastInView:self.view
                    withImage:[UIImage imageNamed:@"toast_pic"]
-                        text:@"用户名或密码错误，请重试"];
+                        text:@"用户名或密码错误，请重试"
+                       style:GFToastStyleLight];
 }
 
 - (IBAction)button2Action:(id)sender {
     [GFToast showToastInView:self.view
                    withImage:[UIImage imageNamed:@"toast_pic"]
                         text:@"用户名或密码错误，请重试"
+                       style:GFToastStyleDark
                     position:GFToastShowPositionCenter
                     duration:GFToastShowTimeLong
                     animation:GFToastAnimationFadeInFadeOut];
@@ -46,13 +48,15 @@
 
 - (IBAction)button3Action:(id)sender {
     [GFToast showToastInView:self.view
-                    withText:@"用户名或密码错误，请重试"];
+                    withText:@"用户名或密码错误，请重试"
+                       style:GFToastStyleDark];
 }
 
 - (IBAction)button4Action:(id)sender {
     [GFToast showToastInView:self.view
                    withImage:nil
                         text:@"人生是一段旅程，在旅行中遇到的每一个人，每一件事与每一个美丽景色，都有可能成为一生中难忘的风景。一路走来，我们无法猜测将是迎接什么样的风景，没有预兆目的地在哪，可是前进的脚步却始终不能停下，因为时间不允许我们在任何地方停留，只有在前进中不断学会选择，学会体会，学会欣赏。"
+                       style:GFToastStyleLight
                     position:GFToastShowPositionBottom
                     duration:GFToastShowTimeLong
                    animation:GFToastAnimationFadeInFadeOut];
