@@ -40,7 +40,7 @@ static const CGFloat kLongShowTime = 3.6;
 static const CGFloat kShortShowTime = 1.8;
 
 // 动画持续时长
-static const CGFloat kShowAnimationDuration = 0.2;
+static const CGFloat kShowAnimationDuration = 0.18;
 static const CGFloat kHideAnimationDuration = 0.25;
 
 
@@ -177,12 +177,6 @@ static const CGFloat kHideAnimationDuration = 0.25;
     
 }
 
-- (void)didMoveToSuperview {
-    [UIView animateWithDuration:kShowAnimationDuration animations:^{
-        self.alpha = kToastDefaultAlpha;
-    }];
-}
-
 - (void)layoutSubviews {
     [super layoutSubviews];
     
@@ -202,13 +196,117 @@ static const CGFloat kHideAnimationDuration = 0.25;
     
 }
 
+- (void)didMoveToSuperview {
+    
+    switch (_animationType) {
+        case GFToastAnimationFadeInFadeOut:
+            [self showToastFadeIn];
+            break;
+        case GFToastAnimationZoomInZoomOut:
+            [self showToastZoomIn];
+            break;
+        case GFToastAnimationZoomInFadeOut:
+            [self showToastZoomIn];
+            break;
+        case GFToastAnimationShakeInFadeOut:
+            [self showToastShakeIn];
+            break;
+        case GFToastAnimationShakeInZoomOut:
+            [self showToastShakeIn];
+            break;
+        default:
+            break;
+    }
+    
+}
+
 - (void)hideToast {
+    
+    switch (_animationType) {
+        case GFToastAnimationFadeInFadeOut:
+            [self hideToastFadeOut];
+            break;
+        case GFToastAnimationZoomInZoomOut:
+            [self hideToastZoomOut];
+            break;
+        case GFToastAnimationZoomInFadeOut:
+            [self hideToastFadeOut];
+            break;
+        case GFToastAnimationShakeInFadeOut:
+            [self hideToastFadeOut];
+            break;
+        case GFToastAnimationShakeInZoomOut:
+            [self hideToastZoomOut];
+            break;
+        default:
+            break;
+    }
+    
+}
+
+
+#pragma mark - Show & Hide Animation
+
+- (void)showToastFadeIn {
+    
+    [UIView animateWithDuration:kShowAnimationDuration animations:^{
+        self.alpha = kToastDefaultAlpha;
+    }];
+    
+}
+
+- (void)showToastZoomIn {
+    
+    self.alpha = kToastDefaultAlpha;
+    
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    animation.duration = kShowAnimationDuration;
+    
+    NSMutableArray *values = [NSMutableArray array];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.0, 0.0, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    
+    animation.values = values;
+    
+    [self.layer addAnimation:animation forKey:nil];
+}
+
+- (void)showToastShakeIn {
+    
+    self.alpha = kToastDefaultAlpha;
+    
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    animation.duration = kShowAnimationDuration;
+    
+    NSMutableArray *values = [NSMutableArray array];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.0, 0.0, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.1, 1.1, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.9, 0.9, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    
+    animation.values = values;
+    
+    [self.layer addAnimation:animation forKey:nil];
+}
+
+- (void)hideToastFadeOut {
+    
     [UIView animateWithDuration:kHideAnimationDuration animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
+    
 }
 
+- (void)hideToastZoomOut {
+    
+    [UIView animateWithDuration:kHideAnimationDuration animations:^{
+        self.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+    
+}
 
 @end

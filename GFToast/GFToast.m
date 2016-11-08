@@ -23,59 +23,62 @@
 @implementation GFToast
 
 // Toast 默认透明度
-static const CGFloat kToastDefaultAlpha = 0.75;
+static const CGFloat kToastDefaultAlpha = 1.0;
 
 // 内边距
-static const CGFloat kToastPaddingLeft = 16.0;
-static const CGFloat kToastPaddingTop = 10.0;
+static const CGFloat kToastPaddingLeft = 18.0;
+static const CGFloat kToastPaddingTop = 12.0;
 
 // 最大外边距
 static const CGFloat kToastMarginLeft = 40.0;
 
 // 图片固定边长
-static const CGFloat kImageSideLength = 19.0;
+static const CGFloat kImageSideLength = 20.0;
 
 // Toast 显示持续时长
-static const CGFloat kLongShowTime = 3.2;
-static const CGFloat kShortShowTime = 1.6;
+static const CGFloat kLongShowTime = 3.6;
+static const CGFloat kShortShowTime = 1.8;
 
 // 动画持续时长
-static const CGFloat kShowAnimationDuration = 0.3;
-static const CGFloat kHideAnimationDuration = 0.4;
+static const CGFloat kShowAnimationDuration = 0.18;
+static const CGFloat kHideAnimationDuration = 0.25;
 
 
 #pragma mark - Class Method
 
-+ (void)showToastInView:(UIView *)view withText:(NSString *)text {
++ (void)showToastInView:(UIView *)view withText:(NSString *)text style:(GFToastStyle)style {
     
     // 不指定图片，默认不显示图片
     // 不指定显示位置，默认为 GFToastShowPositionBottom
     // 不指定显示时长，默认为 GFToastShowTimeShort
     // 不指定动画类型，默认为 GFToastAnimationFadeInFadeOut
-    [self showToastInView:view withImage:nil text:text position:GFToastShowPositionBottom duration:GFToastShowTimeShort animation:GFToastAnimationFadeInFadeOut];
-    
-}
-
-+ (void)showToastInView:(UIView *)view
-              withImage:(UIImage *)image
-                   text:(NSString *)text {
-    
-    // 不指定显示位置，默认为 GFToastShowPositionBottom
-    // 不指定显示时长，默认为 GFToastShowTimeShort
-    // 不指定动画类型，默认为 GFToastAnimationFadeInFadeOut
-    [self showToastInView:view withImage:image text:text position:GFToastShowPositionBottom duration:GFToastShowTimeShort animation:GFToastAnimationFadeInFadeOut];
+    [self showToastInView:view withImage:nil text:text style:style position:GFToastShowPositionBottom duration:GFToastShowTimeShort animation:GFToastAnimationFadeInFadeOut];
     
 }
 
 + (void)showToastInView:(UIView *)view
               withImage:(UIImage *)image
                    text:(NSString *)text
+                  style:(GFToastStyle)style {
+    
+    // 不指定显示位置，默认为 GFToastShowPositionBottom
+    // 不指定显示时长，默认为 GFToastShowTimeShort
+    // 不指定动画类型，默认为 GFToastAnimationFadeInFadeOut
+    [self showToastInView:view withImage:image text:text style:style position:GFToastShowPositionBottom duration:GFToastShowTimeShort animation:GFToastAnimationFadeInFadeOut];
+    
+}
+
++ (void)showToastInView:(UIView *)view
+              withImage:(UIImage *)image
+                   text:(NSString *)text
+                  style:(GFToastStyle)style
                position:(GFToastShowPosition)position
                duration:(GFToastShowTime)duration
               animation:(GFToastAnimation)animation {
     
     GFToast *toast = [[GFToast alloc] initWithImage:image
                                                text:text
+                                              style:style
                                           animation:animation
                                            position:position];
     [view addSubview:toast];
@@ -99,23 +102,34 @@ static const CGFloat kHideAnimationDuration = 0.4;
 
 - (instancetype)initWithImage:(UIImage *)image
                          text:(NSString *)text
+                        style:(GFToastStyle)style
                     animation:(GFToastAnimation)animation
                      position:(GFToastShowPosition)position {
     
     if (self = [super init]) {
         
         self.clipsToBounds = YES;
-        self.backgroundColor = [UIColor blackColor];
         self.alpha = 0.0;
+        self.layer.cornerRadius = 12.0; // 圆角
         
         _animationType = animation;
         _showPosition = position;
         
+        
         _textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _textLabel.textColor = [UIColor whiteColor];
         _textLabel.text = text;
-        _textLabel.font = [UIFont systemFontOfSize:14.0];
+        _textLabel.font = [UIFont systemFontOfSize:14.5];
         [self addSubview:_textLabel];
+        
+        // 根据外观类型处理外观颜色
+        if (style == GFToastStyleLight) {
+            self.backgroundColor = [UIColor whiteColor];
+            _textLabel.textColor = [UIColor blackColor];
+        } else if (style == GFToastStyleDark) {
+            self.backgroundColor = [UIColor blackColor];
+            _textLabel.textColor = [UIColor whiteColor];
+        }
+
         
         // 根据是否带有图片，分开处理
         if (image) {
@@ -161,14 +175,6 @@ static const CGFloat kHideAnimationDuration = 0.4;
         self.center = CGPointMake(0.5 * kNewSuperViewSizeWidth, 0.8 * kNewSuperViewSizeHeight);
     } 
     
-    // 圆角
-    self.layer.cornerRadius = 5.0;
-}
-
-- (void)didMoveToSuperview {
-    [UIView animateWithDuration:kShowAnimationDuration animations:^{
-        self.alpha = kToastDefaultAlpha;
-    }];
 }
 
 - (void)layoutSubviews {
@@ -190,13 +196,117 @@ static const CGFloat kHideAnimationDuration = 0.4;
     
 }
 
+- (void)didMoveToSuperview {
+    
+    switch (_animationType) {
+        case GFToastAnimationFadeInFadeOut:
+            [self showToastFadeIn];
+            break;
+        case GFToastAnimationZoomInZoomOut:
+            [self showToastZoomIn];
+            break;
+        case GFToastAnimationZoomInFadeOut:
+            [self showToastZoomIn];
+            break;
+        case GFToastAnimationShakeInFadeOut:
+            [self showToastShakeIn];
+            break;
+        case GFToastAnimationShakeInZoomOut:
+            [self showToastShakeIn];
+            break;
+        default:
+            break;
+    }
+    
+}
+
 - (void)hideToast {
+    
+    switch (_animationType) {
+        case GFToastAnimationFadeInFadeOut:
+            [self hideToastFadeOut];
+            break;
+        case GFToastAnimationZoomInZoomOut:
+            [self hideToastZoomOut];
+            break;
+        case GFToastAnimationZoomInFadeOut:
+            [self hideToastFadeOut];
+            break;
+        case GFToastAnimationShakeInFadeOut:
+            [self hideToastFadeOut];
+            break;
+        case GFToastAnimationShakeInZoomOut:
+            [self hideToastZoomOut];
+            break;
+        default:
+            break;
+    }
+    
+}
+
+
+#pragma mark - Show & Hide Animation
+
+- (void)showToastFadeIn {
+    
+    [UIView animateWithDuration:kShowAnimationDuration animations:^{
+        self.alpha = kToastDefaultAlpha;
+    }];
+    
+}
+
+- (void)showToastZoomIn {
+    
+    self.alpha = kToastDefaultAlpha;
+    
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    animation.duration = kShowAnimationDuration;
+    
+    NSMutableArray *values = [NSMutableArray array];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.0, 0.0, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    
+    animation.values = values;
+    
+    [self.layer addAnimation:animation forKey:nil];
+}
+
+- (void)showToastShakeIn {
+    
+    self.alpha = kToastDefaultAlpha;
+    
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    animation.duration = kShowAnimationDuration;
+    
+    NSMutableArray *values = [NSMutableArray array];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.0, 0.0, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.1, 1.1, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.9, 0.9, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    
+    animation.values = values;
+    
+    [self.layer addAnimation:animation forKey:nil];
+}
+
+- (void)hideToastFadeOut {
+    
     [UIView animateWithDuration:kHideAnimationDuration animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
+    
 }
 
+- (void)hideToastZoomOut {
+    
+    [UIView animateWithDuration:kHideAnimationDuration animations:^{
+        self.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+    
+}
 
 @end
