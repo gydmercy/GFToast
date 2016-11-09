@@ -6,10 +6,10 @@ A simple message box on the iOS platform, mainly imitate the Android Toast.
 
 ## Screenshots
 
-![](http://7xjlak.com1.z0.glb.clouddn.com/gftoastIMG_5874.PNG)  
-![](http://7xjlak.com1.z0.glb.clouddn.com/gftoastIMG_5875.PNG)  
-![](http://7xjlak.com1.z0.glb.clouddn.com/gftoastIMG_5876.PNG)  
-![](http://7xjlak.com1.z0.glb.clouddn.com/gftoastIMG_5877.PNG)
+![](http://7xjlak.com1.z0.glb.clouddn.com/gftoastIMG_5882.PNG)  
+![](http://7xjlak.com1.z0.glb.clouddn.com/gftoastIMG_5883.PNG)  
+![](http://7xjlak.com1.z0.glb.clouddn.com/gftoastIMG_5884.PNG)  
+![](http://7xjlak.com1.z0.glb.clouddn.com/gftoastIMG_5885.PNG)
 
 
 ## License

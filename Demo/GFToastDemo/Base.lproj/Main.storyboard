@@ -44,7 +44,7 @@
                                     <constraint firstAttribute="width" constant="320" id="UJ2-6E-JG8"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="有图，长时间，居中，黑色，ZoomInFadeOut">
+                                <state key="normal" title="有图，长时间，居中，黑色，ScaleInZoomOut">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -83,7 +83,7 @@
                                     <constraint firstAttribute="width" constant="320" id="Jfv-iS-JZ3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="无图，长时间，底部，长文本，ShakeInFadeOut">
+                                <state key="normal" title="无图，长时间，底部，长文本，ScaleInFadeOut">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>

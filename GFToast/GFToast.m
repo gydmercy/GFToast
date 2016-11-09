@@ -39,9 +39,13 @@ static const CGFloat kImageSideLength = 20.0;
 static const CGFloat kLongShowTime = 3.6;
 static const CGFloat kShortShowTime = 1.8;
 
-// 动画持续时长
-static const CGFloat kShowAnimationDuration = 0.18;
+// 显示与消失的动画持续时长
+static const CGFloat kFadeInAnimationDuration = 0.2;
+static const CGFloat kZoomInAnimationDuration = 0.15;
+static const CGFloat kShakeInAnimationDuration = 0.18;
+static const CGFloat kScaleInAnimationDuration = 0.08;
 static const CGFloat kHideAnimationDuration = 0.25;
+
 
 
 #pragma mark - Class Method
@@ -214,6 +218,12 @@ static const CGFloat kHideAnimationDuration = 0.25;
         case GFToastAnimationShakeInZoomOut:
             [self showToastShakeIn];
             break;
+        case GFToastAnimationScaleInFadeOut:
+            [self showToastScaleIn];
+            break;
+        case GFToastAnimationScaleInZoomOut:
+            [self showToastScaleIn];
+            break;
         default:
             break;
     }
@@ -238,6 +248,12 @@ static const CGFloat kHideAnimationDuration = 0.25;
         case GFToastAnimationShakeInZoomOut:
             [self hideToastZoomOut];
             break;
+        case GFToastAnimationScaleInFadeOut:
+            [self hideToastFadeOut];
+            break;
+        case GFToastAnimationScaleInZoomOut:
+            [self hideToastZoomOut];
+            break;
         default:
             break;
     }
@@ -249,7 +265,7 @@ static const CGFloat kHideAnimationDuration = 0.25;
 
 - (void)showToastFadeIn {
     
-    [UIView animateWithDuration:kShowAnimationDuration animations:^{
+    [UIView animateWithDuration:kFadeInAnimationDuration animations:^{
         self.alpha = kToastDefaultAlpha;
     }];
     
@@ -260,7 +276,7 @@ static const CGFloat kHideAnimationDuration = 0.25;
     self.alpha = kToastDefaultAlpha;
     
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    animation.duration = kShowAnimationDuration;
+    animation.duration = kZoomInAnimationDuration;
     
     NSMutableArray *values = [NSMutableArray array];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.0, 0.0, 1.0)]];
@@ -276,12 +292,28 @@ static const CGFloat kHideAnimationDuration = 0.25;
     self.alpha = kToastDefaultAlpha;
     
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    animation.duration = kShowAnimationDuration;
+    animation.duration = kShakeInAnimationDuration;
     
     NSMutableArray *values = [NSMutableArray array];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.0, 0.0, 1.0)]];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.1, 1.1, 1.0)]];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.9, 0.9, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    
+    animation.values = values;
+    
+    [self.layer addAnimation:animation forKey:nil];
+}
+
+- (void)showToastScaleIn {
+    
+    self.alpha = kToastDefaultAlpha;
+    
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    animation.duration = kScaleInAnimationDuration;
+    
+    NSMutableArray *values = [NSMutableArray array];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.4, 1.4, 1.0)]];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
     
     animation.values = values;

@@ -47,7 +47,7 @@
                        style:GFToastStyleDark
                     position:GFToastShowPositionCenter
                     duration:GFToastShowTimeLong
-                    animation:GFToastAnimationZoomInFadeOut];
+                    animation:GFToastAnimationScaleInZoomOut];
 }
 
 - (IBAction)button3Action:(id)sender {
@@ -73,7 +73,7 @@
                        style:GFToastStyleLight
                     position:GFToastShowPositionBottom
                     duration:GFToastShowTimeLong
-                   animation:GFToastAnimationShakeInFadeOut];
+                   animation:GFToastAnimationScaleInFadeOut];
 }
 
 @end

@@ -25,12 +25,16 @@ typedef NS_ENUM(NSUInteger, GFToastAnimation){
     GFToastAnimationFadeInFadeOut,
     /** 缩放出现消失 */
     GFToastAnimationZoomInZoomOut,
-    /** 缩放隐藏消失 */
+    /** 放大出现隐藏消失 */
     GFToastAnimationZoomInFadeOut,
     /** 震颤出现隐藏消失 */
     GFToastAnimationShakeInFadeOut,
-    /** 震颤出现缩放消失 */
-    GFToastAnimationShakeInZoomOut
+    /** 震颤出现缩小消失 */
+    GFToastAnimationShakeInZoomOut,
+    /** 微缩出现隐藏消失 */
+    GFToastAnimationScaleInFadeOut,
+    /** 微缩出现缩小消失 */
+    GFToastAnimationScaleInZoomOut
 };
 
 /**
