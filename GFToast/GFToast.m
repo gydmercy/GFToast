@@ -114,7 +114,7 @@ static const CGFloat kHideAnimationDuration = 0.25;
         
         self.clipsToBounds = YES;
         self.alpha = 0.0;
-        self.layer.cornerRadius = 12.0; // 圆角
+        self.layer.cornerRadius = 12.0; // 默认圆角
         
         _animationType = animation;
         _showPosition = position;
@@ -159,18 +159,39 @@ static const CGFloat kHideAnimationDuration = 0.25;
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     
-    // 计算输入文字占据的大小
-    CGSize limitedSize = CGSizeMake(kNewSuperViewSizeWidth - 2 * kToastMarginLeft, 0.5 * kNewSuperViewSizeHeight);
+    // 根据是否存在图片，设置文字 size 的限制 size
+    CGSize limitedSize;
+    if (_imageView) {
+        limitedSize = CGSizeMake(kNewSuperViewSizeWidth - 2 * kToastMarginLeft - kImageSideLength - 0.6 * kToastPaddingLeft, 0.5 * kNewSuperViewSizeHeight);
+    } else {
+        limitedSize = CGSizeMake(kNewSuperViewSizeWidth - 2 * kToastMarginLeft, 0.5 * kNewSuperViewSizeHeight);
+    }
+    
+    // 在限制 size 下得到文字的 size
     CGSize textSize = [_textLabel.text boundingRectWithSize:limitedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_textLabel.font} context:nil].size;
     
     // 根据是否带有图片，设置 toast 控件的 frame
     if (_imageView) {
-        _toastSize.width = textSize.width + kImageSideLength + 2.6 * kToastPaddingLeft;
+        _toastSize.width = textSize.width + 2 * kToastPaddingLeft + kImageSideLength + 0.6 * kToastPaddingLeft;
+        // 如果有图片，因为文字限制为一行，所以 toast 的高度不能超过一行的高度
+        CGSize oneLineSize = [@"OneLineSize" boundingRectWithSize:limitedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_textLabel.font} context:nil].size;
+        if (textSize.height > oneLineSize.height) {
+            _toastSize.height = oneLineSize.height + 2 * kToastPaddingTop;
+        } else {
+            _toastSize.height = textSize.height + 2 * kToastPaddingTop;
+        }
     } else {
         _toastSize.width = textSize.width + 2 * kToastPaddingLeft;
+        _toastSize.height = textSize.height + 2 * kToastPaddingTop;
     }
-    _toastSize.height = textSize.height + 2 * kToastPaddingTop;
+    
+    // 得到 toast 的 frame
     self.frame = CGRectMake(0, 0, _toastSize.width, _toastSize.height);
+    
+    // 如果有图片，侧边为半圆
+    if (_imageView) {
+        self.layer.cornerRadius = 0.5 * self.bounds.size.height;
+    }
     
     // 显示位置
     if (_showPosition == GFToastShowPositionCenter) {
